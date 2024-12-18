@@ -1,0 +1,355 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dating Website Home Page</title>
+
+    <style>
+        body {
+           
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                height: 100vh;
+                color: #ddd;
+                background: #ff0084;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #33001b, #ff0084);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #33001b, #ff0084); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                flex-direction: column;
+        }
+
+        /* Top bar styles */
+        .top-bar {
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(36, 36, 36, 0.8); /* Transparent black */
+            padding: 5px 15px;
+            color: #232121;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .top-bar .site-name {
+            font-size: 30px;
+            color: #f76b6b;
+        }
+
+        .top-bar a {
+            text-decoration: none;
+            background-color: #ff8080;
+            color: #fff;
+            font-size: 14px;
+            padding: 5px 15px;
+            border-radius: 4px;
+            transition: background 0.5s;
+        }
+
+        .top-bar a:hover {
+            background-color: #ff0000;
+        }
+
+        /* Main container layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+        
+             /* Subtracting top-bar height */
+        }
+
+        /* Sidebar styles */
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: rgba(36, 36, 36, 0.8); /* Semi-transparent dark background */
+            padding: 20px 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover{
+            background-color:#333333 ;
+            transform: scale(1.05);
+        }
+
+
+
+         
+
+        /* Main content styles */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(26, 26, 26, 0.8);
+            padding: 2px;
+        }
+
+        /* Profile card with compact layout */
+        .profile-card {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 400px; /* Narrower profile card */
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(255, 1, 158, 0.1);
+            background: -webkit-linear-gradient(to right, #7d6c7a, #4a4349);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #8b6984, #efcfe7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        /* Slider styles */
+        .slider {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 95%;
+            border-radius: 10px;
+        }
+
+        /* Dots navigation styles */
+        .dots {
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #050505;
+            border-radius: 50%;
+            margin: 0 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: #ff5a5f;
+        }
+
+        .name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 2px;
+        }
+
+        .location {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .bio {
+            font-size: 13px;
+            font-weight: 550;
+            line-height: 1.3;
+            color: #444;
+            margin-bottom: 8px;
+        }
+
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            margin-bottom: 8px;
+            justify-content: center;
+        }
+
+        .interests span {
+            background-color: #f4d6d6;
+            color: #222;
+            font-size: 12px;
+            padding: 3px 6px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+
+        .fade-in {
+    animation: fadeIn 1.0s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}   
+    </style>
+</head>
+<body class="fade-in">
+
+
+    <!-- Top Bar with Site Name and Login Link -->
+    <div class="top-bar">
+        <img src="/static/spark (2).png" alt="" style="height: 40px; width: 150px;">
+        <a href="{%url 'login'%}">Log out</a>
+    </div>
+
+    <!-- Main Container with Sidebar and Main Content -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+              <div class="colour"><li><a href="{% url 'home'%}">🏠 Home</a></li></div>
+              <li><a href="{% url 'search_profiles'%}" >🔍 Search </a></li>
+                 <div class="colour"><li><a href="{% url 'notifications'%}">🔔 Notifications & Chat</a></li></div>
+                 <div class="colour"><li><a href="{% url 'user_list_view'%}">💬 Chat</a></li></div>
+                 <div class="colour"><li><a href="{% url 'profile'%}" style="background-color:#333333">👩🏻‍💼 Profile</a></li></div>
+                 <div class="colour"><li><a href="{% url 'profile_up'%}" >👤 Update Profile</a></li></div>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="profile-card">
+                <!-- Image Slider -->
+                <div class="slider">
+                    <div class="slides">
+                        <div class="slide">
+                            {% if profile.photo1 %}
+                            <img src="{{ profile.photo1.url }}" alt="Photo 1">
+                            {% endif %}
+                        </div>
+                        <div class="slide">
+                            {% if profile.photo2 %}
+                            <img src="{{ profile.photo2.url }}" alt="Photo 2">
+                            {% endif %}
+                        </div>
+                        <div class="slide">
+                            {% if profile.photo3 %}
+                            <img src="{{ profile.photo3.url }}" alt="Photo 3">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="dots">
+                    <!-- Dots will be generated here by JavaScript -->
+                </div>
+
+                <!-- Name and Age/Location -->
+                <div class="name"><h1>{{ user }}</h1></div>    
+                <div class="location">{{ profile.location }}</div>
+
+                <!-- Bio Section -->
+                <div class="bio">{{ profile.bio }}</div>
+
+                <!-- Interests -->
+                <div class="interests">
+                    <span> {% if profile.interest1 %} <li>{{ profile.interest1 }}</li>{% endif %} </span>
+                    <span> {% if profile.interest2 %} <li>{{ profile.interest2 }}</li>{% endif %} </span>
+                    <span> {% if profile.interest3 %} <li>{{ profile.interest3 }}</li>{% endif %} </span>
+                    <span> {% if profile.interest4 %} <li>{{ profile.interest4 }}</li>{% endif %} </span>
+                    <span> {% if profile.interest5 %} <li>{{ profile.interest5 }}</li>{% endif %} </span>
+                </div>
+               
+
+                <!-- Actions (like and dislike buttons) -->
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code for the image slider functionality
+        const slides = document.querySelectorAll(".slide");
+        const dotsContainer = document.querySelector(".dots");
+        let currentIndex = 0;
+        let slideInterval;
+
+        // Create dots based on the number of slides
+        slides.forEach((_, index) => {
+            const dot = document.createElement("span");
+            dot.classList.add("dot");
+            if (index === 0) dot.classList.add("active");
+            dot.addEventListener("click", () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        // Function to switch slides
+        function goToSlide(index) {
+    slides[currentIndex].classList.remove("active");
+    dotsContainer.children[currentIndex].classList.remove("active");
+    currentIndex = index;
+    slides[currentIndex].classList.add("active");
+    dotsContainer.children[currentIndex].classList.add("active");
+    
+    // Move the slides container
+    const offset = -currentIndex * 100; // Adjust according to the number of slides
+    document.querySelector('.slides').style.transform = `translateX(${offset}%)`;
+}
+
+        // Function to show the next slide
+        function nextSlide() {
+            let nextIndex = (currentIndex + 1) % slides.length;
+            goToSlide(nextIndex);
+        }
+
+        // Start automatic slide
+        function startSlideShow() {
+            slideInterval = setInterval(nextSlide, 3000); // Slide every 3 seconds
+        }
+
+        // Pause slide show on hover
+        document.querySelector(".slider").addEventListener("mouseenter", () => {
+            clearInterval(slideInterval);
+        });
+
+        // Resume slide show on mouse leave
+        document.querySelector(".slider").addEventListener("mouseleave", startSlideShow);
+
+        // Initial slide setup and start slideshow
+        slides[currentIndex].classList.add("active");
+        startSlideShow();
+    </script>
+
+</body>
+</html>

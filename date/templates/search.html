@@ -1,0 +1,256 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Page - Dark Theme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            color: #ddd;
+            background: #ff0084;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #33001b, #ff0084);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #33001b, #ff0084); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            flex-direction: column;
+        }
+
+        /* Top bar styles */
+        .top-bar {
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(36, 36, 36, 0.8); /* Transparent black */
+            padding: 5px 15px;
+            color: #232121;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .top-bar .site-name {
+            font-size: 30px;
+            color: #f76b6b;
+        }
+
+        .top-bar a {
+            text-decoration: none;
+            background-color: #ff8080;
+            color: #ddd;
+            font-size: 14px;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .top-bar a:hover {
+            background-color: #ff4040;
+        }
+
+        /* Main container layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: rgba(36, 36, 36, 0.8); /* Semi-transparent dark background */
+            padding: 20px 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #333333;
+            transform: scale(1.05);
+        }
+
+        /* Container for user cards */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .container form {
+            display: flex;
+            width: 400px;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .container input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .container button {
+            background-color: #f76b6b;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .container button:hover {
+            background-color: #ff4040;
+        }
+
+        .container h2 {
+            color: #f76b6b;
+            text-align: center;
+        }
+
+        .container ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .container ul li {
+            flex: 1 1 300px; /* Responsive flex item */
+            padding: 15px;
+            background: linear-gradient(to right, #56294d70, #f864645c);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+
+        .container ul li:hover {
+            transform: scale(1.05);
+        }
+
+        .container ul li img {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            transition: border-color 0.3s;
+        }
+
+        .container ul li img:hover {
+            border-color: #f76b6b;
+        }
+
+        .container ul li strong {
+            font-size: 18px;
+            color: #f76b6b;
+        }
+
+        .container ul li p {
+            margin: 5px 0;
+            color: #ddd;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container ul li {
+                flex: 1 1 100%; /* Full width for smaller screens */
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1.0s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body class="fade-in">
+
+    <!-- Top Bar with Site Name and Logout Link -->
+    <div class="top-bar">
+        <img src="/static/spark (2).png" alt="" style="height: 40px; width: 150px;">
+        <a href="#">Log out</a>
+    </div>
+
+    <!-- Main Container with Sidebar and Notification Section -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="{% url 'home' %}">🏠 Home</a></li>
+                <li><a href="{% url 'search_profiles'%}" style="background-color:#333333">🔍 Search </a></li>
+                <li><a href="{% url 'notifications' %}" >🔔 Notifications</a></li>
+              <li><a href="{% url 'user_list_view'%}">💬 Chat</a></li>
+                <li><a href="{% url 'profile' %}">👩🏻‍💼 Profile</a></li>
+                <li><a href="{% url 'profile_up' %}"> 👤 Update Profile</a></li>
+            </ul>
+        </div>
+
+        <!-- User Cards Container -->
+        <div class="container">
+            <form method="get" action="{% url 'search_profiles' %}">
+                <input type="text" name="q" placeholder="Search profiles..." value="{{ query }}">
+                <button type="submit">Search</button>
+            </form>
+
+            <h2>Search Results</h2>
+            <ul>
+                {% for profile in profiles %}
+                <li>
+                    <img src="{{ profile.photo1.url }}" alt="Profile Photo">
+                    <div>
+                        <strong>{{ profile.name }}</strong>
+                        <p>{{ profile.bio }}</p>
+                        <a href="{% url 'an_profile_view' profile.user.id %}" style="color: hsl(0, 40%, 73%); text-decoration: none;">View this profile</a>
+                    </div>
+                </li>
+                {% empty %}
+                <li>No profiles found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

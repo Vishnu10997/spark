@@ -1,0 +1,405 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messaging Page - Dark Theme</title>
+
+    <style>
+        body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                height: 100vh;
+                color: #ddd;
+                background: #ff0084;  /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #33001b, #ff0084);  /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #33001b, #ff0084); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                flex-direction: column;
+        }
+
+        /* Top bar styles */
+        .top-bar {
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(36, 36, 36, 0.8); /* Transparent black */
+            padding: 5px 15px;
+            color: #232121;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .top-bar .site-name {
+            font-size: 30px;
+            color: #f76b6b;
+            text-decoration: none;
+        }
+
+        .top-bar a{
+            text-decoration: none;
+            background-color: #ff8080;
+            color: #ddd;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.5s;
+        }
+
+        .top-bar a:hover {
+            background-color: #ff4040;
+        }
+
+        /* Main container layout */
+        .main-container {
+            display: flex;
+            flex: 1;
+        
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: rgba(36, 36, 36, 0.8); /* Semi-transparent dark background */
+            padding: 20px 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #333333;
+            transform: scale(1.05);
+        }
+
+        
+        
+
+        /* Message section styles */
+        .message-section {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(26, 26, 26, 0.8); 
+           
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            background: rgba(26, 26, 26, 0.316); 
+        }
+        .chat-messages {
+            flex: auto;
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background: -webkit-linear-gradient(to right, #f720206b, #5f2323); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #56294d70, #ff5b5b9d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            margin-bottom: 10px;
+            max-height: 500px; /* Set a fixed height for the chat container */
+            box-sizing: border-box; /* Ensure padding is included in height */
+        }
+        .message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.message.sent {
+    background-color: #f224e146; /* Style for sent messages */
+    color: #ffffff;
+    text-align: right;
+    align-self: flex-end;
+}
+
+.message.received {
+    background-color: #292525a8; /* Style for received messages */
+    color: #ddd;
+    text-align: left;
+    align-self: flex-start;
+}
+        .input-container {
+            display: flex;
+            gap: 10px;
+        }
+        .input-container input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: #ddd;
+        }
+        .input-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f76b6b;
+            color: #ddd;
+            cursor: pointer;
+        }
+        .input-container button:hover {
+            background-color: #ff4c4c;
+        }
+        .fade-in {
+    animation: fadeIn 1.0s forwards;
+}
+
+
+.message .timestamp {
+    font-size: 0.8em;
+    color: #aaa;
+    text-align: right; /* Or left, depending on your design */
+    margin-top: 5px;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}   
+    </style>
+</head>
+<body class="fade-in">
+
+
+    <!-- Top Bar with Site Name and Logout Link -->
+    <div class="top-bar">
+        <img src="/static/spark (2).png" alt="" style="height: 40px; width: 150px;">
+        <a href="#">Log out</a>
+    </div>
+
+    <!-- Main Container with Sidebar, User List, and Message Section -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <div class="colour"><li><a href="{% url 'home'%}">🏠 Home</a></li></div>
+                <li><a href="{% url 'search_profiles'%}" >🔍 Search </a></li>
+                <div class="colour"><li><a href="{% url 'notifications'%}"  >🔔 Notifications</a></li></div>
+                <div class="colour"><li><a href="{% url 'user_list_view'%}" style="background-color:#333333">💬 Chat</a></li></div>
+                <li><a href="{% url 'profile' %}">👩🏻‍💼 Profile</a></li>
+                <li><a href="{% url 'profile_up' %}">👤 Update Profile</a></li>
+            </ul>
+
+        </div>
+
+        <!-- User List Section -->
+        
+        <!-- Message Section -->
+        <div class="message-section">
+            <div class="chat-header">
+                
+                <h2>Chat with <a href="{% url 'an_profile_view' recipient.id %}" style="color: hsl(0, 100%, 48%); text-decoration: none;">{{ recipient.username }}</a></h2>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                {% for message in messages %}
+                <div class="message {% if message.sender.id == request.user.id %}sent{% else %}received{% endif %}">
+                    {{ message.content }}
+                    {% if message.file_url %}
+                        <a href="/media/{{ message.file_url }}" target="_blank" style="color: #f76b6b; text-decoration: underline;">Click here to view image</a>
+                    {% endif %}
+                    <div class="timestamp">{{ message.timestamp }}</div>
+                </div>
+                {% endfor %}
+
+            
+            </div>
+            <div class="input-container">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <input type="file" id="file-input" style="display:none;">
+                <label for="file-input" id="file-label">📎</label>
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+        
+           <!-- Message Header -->
+          
+    </div>
+
+
+
+
+
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+    const currentUserId = {{ request.user.id }};  // @ts-ignore
+    const messageBox = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+    const fileInput = document.getElementById('file-input');
+    const recipientId = '{{ recipient.id }}';  // ID of the chat recipient
+    const csrfToken = '{{ csrf_token }}';  // CSRF token for secure requests
+
+    // Function to refresh chat messages
+    function refreshMessages() {
+    fetch(`/chat/messages/${recipientId}/`, {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        messageBox.innerHTML = '';  // Clear existing messages
+
+        data.messages.forEach(message => {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+
+            if (Number(message.sender_id) === currentUserId) {
+                messageElement.classList.add('sent');
+            } else {
+                messageElement.classList.add('received');
+            }
+
+            // Display message content or image link
+            if (message.content) {
+                const messageContent = document.createElement('div');
+                messageContent.textContent = message.content;
+                messageElement.appendChild(messageContent);
+            }
+            if (message.file_url) {
+                const fileLink = document.createElement('a');
+                fileLink.href = `/media/${message.file_url}`;
+                fileLink.target = '_blank';
+                fileLink.textContent = 'Click here to view image';
+                fileLink.style.color = '#f76b6b';
+                fileLink.style.textDecoration = 'underline';
+                messageElement.appendChild(fileLink);
+            }
+
+            const messageTimestamp = document.createElement('div');
+            messageTimestamp.textContent = message.timestamp;
+            messageTimestamp.classList.add('timestamp');
+
+            messageElement.appendChild(messageTimestamp);
+            messageBox.appendChild(messageElement);
+        });
+
+        // Scroll to the bottom after refreshing messages
+        scrollToBottom();
+    })
+    .catch(error => console.error('Error refreshing messages:', error));
+}
+
+   // Function to send a new message
+function sendMessage() {
+    const content = messageInput.value.trim();
+    const file = fileInput.files[0];  // Get the selected file (if any)
+
+    if (!content && !file) return;  // Don't send if there's no content or file
+
+    const formData = new FormData();
+    formData.append('receiver_id', recipientId);
+    formData.append('content', content);
+
+    if (file) {
+        formData.append('file', file);
+    }
+
+    fetch('/chat/send/', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken,
+        },
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            const newMessage = document.createElement('div');
+            newMessage.classList.add('message', 'sent');
+
+            if (data.message.file_url) {
+                // Create a link for the image
+                const imageLink = document.createElement('a');
+                imageLink.href = data.message.file_url;
+                imageLink.target = '_blank';  // Open in new tab
+                imageLink.textContent = 'Click here to view image';
+                imageLink.style.color = 'cyan';  // Optional styling
+
+                newMessage.appendChild(imageLink);
+            } else {
+                newMessage.textContent = data.message.content;
+            }
+
+            const messageTimestamp = document.createElement('div');
+            messageTimestamp.textContent = data.message.timestamp;
+            messageTimestamp.classList.add('timestamp');
+
+            newMessage.appendChild(messageTimestamp);
+            messageBox.appendChild(newMessage);
+
+            // Clear the input fields
+            messageInput.value = '';
+            fileInput.value = '';
+            scrollToBottom();
+        }
+    })
+    .catch(error => console.error('Error sending message:', error));
+}
+
+
+    // Event listener for the send button
+    sendButton.addEventListener('click', sendMessage);
+
+    // Event listener for pressing "Enter" in the input field
+    messageInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Refresh messages every 2 seconds
+    setInterval(refreshMessages, 2000);
+
+    // Initial fetch of messages when the page loads
+    refreshMessages();
+});
+
+// Function to scroll to the bottom of the message container
+
+  
+
+        </script>
+        
+    
+</body>
+</html>
